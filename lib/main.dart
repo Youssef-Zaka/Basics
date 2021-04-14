@@ -15,7 +15,8 @@ class MyFirstApp extends StatefulWidget {
 }
 
 class _MyFirstAppState extends State<MyFirstApp> {
-  void _answerQuestion() {
+  void _answerQuestion(int score) {
+    _totalScore += score;
     setState(() {
       _questionIndex++;
     });
@@ -25,20 +26,44 @@ class _MyFirstAppState extends State<MyFirstApp> {
   }
 
   var _questionIndex = 0;
+  var _totalScore = 0;
   final _questions = const [
     {
       'questionText': 'what\'s your favourite color?',
-      'answers': ['Black', 'Red', 'Green', 'White']
+      'answers': [
+        {'text': 'Black', 'score': 10},
+        {'text': 'Red', 'score': 5},
+        {'text': 'Green', 'score': 7},
+        {'text': 'White', 'score': 15}
+      ]
     },
     {
       'questionText': 'what\'s your favourite animal?',
-      'answers': ['Cat', 'Dog', 'Rabbit', 'Tiger']
+      'answers': [
+        {'text': 'Cat', 'score': 10},
+        {'text': 'Red', 'score': 5},
+        {'text': 'Green', 'score': 7},
+        {'text': 'White', 'score': 15}
+      ]
     },
     {
       'questionText': 'what\'s your favourite app?',
-      'answers': ['whatever', 'whoever', 'wherever', 'whenever']
+      'answers': [
+        {'text': 'Whatever', 'score': 10},
+        {'text': 'Whenever', 'score': 5},
+        {'text': 'Whereever', 'score': 7},
+        {'text': 'However', 'score': 15}
+      ]
     }
   ];
+
+  void _resetQuiz() {
+    setState(() {
+      _questionIndex = 0;
+      _totalScore = 0;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -52,7 +77,7 @@ class _MyFirstAppState extends State<MyFirstApp> {
                 questions: _questions,
                 questionIndex: _questionIndex,
               )
-            : Result(),
+            : Result(_totalScore, _resetQuiz),
       ),
     );
   }
